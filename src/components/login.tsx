@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 const Login: React.FC = () => {
   const discordAuthURL =
-    "https://discord.com/api/oauth2/authorize?client_id=1069266927513505862&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email";
+    "https://discord.com/api/oauth2/authorize?client_id=1069266927513505862&redirect_uri=http%3A%2F%2Fvalearnis-quiz.vercel.app%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email";
   const session = useSession();
   
 
