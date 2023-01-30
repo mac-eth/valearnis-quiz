@@ -1,9 +1,7 @@
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 const Login: React.FC = () => {
-  const discordAuthURL =
-    "https://discord.com/api/oauth2/authorize?client_id=1069266927513505862&redirect_uri=https%3A%2F%2Fvalearnis-quiz.vercel.app%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email";
   const session = useSession();
   
 
@@ -24,12 +22,12 @@ const Login: React.FC = () => {
   } else {
     return (
         <div className="flex justify-center">
-      <Link
-        href={discordAuthURL}
+      <button
+        onClick={() => signIn("discord")}
         className="flex rounded-md bg-discord w-60 h-20 justify-center items-center  px-4 py-2 text-base font-semibold leading-6 text-black duration-300 hover:bg-discord/80"
       >
         Login with Discord
-      </Link>
+      </button>
       </div>
     );
   }
