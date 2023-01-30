@@ -1,19 +1,15 @@
 import { usePageStore, useQuestionStore, useScoreStore } from "@/store";
 import { api } from "@/utils/api";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+// import { useRouter } from "next/router";
+// import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import type { question } from "@/types";
 
 const Quiz: React.FC = () => {
-  const session = useSession();
-  const router = useRouter();
-
-  if (!session.data?.user) {
-    void router.push("/");
-  }
+  // const session = useSession();
+  // const router = useRouter();
 
   // Page State Management
   const page = usePageStore((state) => state.page);
