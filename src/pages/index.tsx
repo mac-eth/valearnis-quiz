@@ -1,3 +1,4 @@
+import Login from "@/components/login";
 import QuizHero from "@/images/quiz_hero.png";
 import { Square2StackIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
@@ -57,26 +58,7 @@ const Home: React.FC = () => {
           aria-label="Global"
         >
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {session?.data?.user?.name ? (
-              <div className="flex gap-2">
-                <div className="rounded-md bg-teal-600 px-4 py-2 text-base font-semibold leading-6 text-white duration-300 hover:bg-black hover:bg-discord/80">
-                  {`Logged in as ${session.data.user.name}`}
-                </div>
-                <Link
-                  href="/api/auth/signout"
-                  className="rounded-md bg-discord px-4 py-2 text-base font-semibold leading-6 text-white duration-300 hover:bg-black hover:bg-discord/80"
-                >
-                  Logout
-                </Link>
-              </div>
-            ) : (
-              <Link
-                href={discordAuthURL}
-                className="rounded-md bg-discord px-4 py-2 text-base font-semibold leading-6 text-white duration-300 hover:bg-black hover:bg-discord/80"
-              >
-                Login with Discord
-              </Link>
-            )}
+            <Login />
           </div>
         </nav>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">

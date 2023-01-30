@@ -2,10 +2,14 @@ import { usePageStore, useQuestionStore, useScoreStore } from "@/store";
 import { api } from "@/utils/api";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import type { question } from "@/types";
+import Login from "@/components/login";
 
 const Quiz: React.FC = () => {
+  const session = useSession();
 
   // Page State Management
   const page = usePageStore((state) => state.page);
@@ -80,11 +84,15 @@ const Quiz: React.FC = () => {
     return shuffledOptions;
   }
 
-  if (!questions?.[page] && page === 0) {
+  if (!session?.data) {
+    return <Login />;
+  }
+
+  if (session?.data && !questions?.[page] && page === 0) {
     return (
       <div className="h-screen bg-neutral-200">
         <Link href="/">
-          <button className="duration:300 mx-12 my-12 h-20 w-48 rounded-xl bg-teal-600 hover:bg-teal-700 font-semibold">
+          <button className="duration:300 mx-12 my-12 h-20 w-48 rounded-xl bg-teal-600 font-semibold hover:bg-teal-700">
             Back to Home
           </button>
         </Link>
@@ -100,7 +108,7 @@ const Quiz: React.FC = () => {
     );
   }
 
-  if (page === 10) {
+  if (session?.data && page === 10) {
     return (
       <div className="mx-10 flex h-screen flex-col items-center justify-center gap-2">
         <div className="text-2xl font-bold">Quiz Completed</div>
@@ -126,7 +134,8 @@ const Quiz: React.FC = () => {
         </div>
       </div>
     );
-  } else {
+  }
+  if (session?.data) {
     return (
       <div className="relative h-screen">
         <div className="mx-10 my-10 flex justify-center gap-6 text-2xl font-bold ">
@@ -141,9 +150,9 @@ const Quiz: React.FC = () => {
           {GetOptions().map((option) => (
             <button
               key={option}
-              className={`rounded-lg border border-gray-300 shadow duration-300 p-4 ${
+              className={`rounded-lg border border-gray-300 p-4 shadow duration-300 ${
                 selectedAnswer === option
-                  ? "bg-blue-500 hover:bg-blue-700 text-white"
+                  ? "bg-blue-500 text-white hover:bg-blue-700"
                   : "bg-white hover:bg-neutral-200"
               }`}
               onClick={() => handleAnswerSelection(option)}
@@ -157,7 +166,7 @@ const Quiz: React.FC = () => {
           <div className="flex justify-center gap-6 text-xl font-semibold ">
             {page > 0 && (
               <button
-                className="w-40 h-24 rounded-lg bg-blue-500 hover:bg-blue-700 px-5 py-2 duration-300 hover:scale-105 "
+                className="h-24 w-40 rounded-lg bg-blue-500 px-5 py-2 duration-300 hover:scale-105 hover:bg-blue-700 "
                 onClick={decreasePage}
               >
                 Previous
@@ -165,7 +174,7 @@ const Quiz: React.FC = () => {
             )}
             {page < 10 && selectedAnswer ? (
               <button
-                className="w-40 h-24 rounded-lg bg-blue-500 hover:bg-blue-700 px-5 py-2 duration-300 hover:scale-105 "
+                className="h-24 w-40 rounded-lg bg-blue-500 px-5 py-2 duration-300 hover:scale-105 hover:bg-blue-700 "
                 onClick={() => {
                   setSelectedAnswer(null);
                   increasePage();
@@ -175,7 +184,7 @@ const Quiz: React.FC = () => {
               </button>
             ) : (
               <button
-                className="w-40 h-24 rounded-lg bg-red-500 px-5 py-2 "
+                className="h-24 w-40 rounded-lg bg-red-500 px-5 py-2 "
                 disabled={true}
               >
                 Next
@@ -187,6 +196,9 @@ const Quiz: React.FC = () => {
         )}
       </div>
     );
+  }
+  else {
+    return <Login />;
   }
 };
 
