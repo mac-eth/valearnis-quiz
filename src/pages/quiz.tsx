@@ -19,8 +19,7 @@ const Quiz: React.FC = () => {
 
   // Score State Management
   const score = useScoreStore((state) => state.score);
-  const increaseScore = useScoreStore((state) => state.increaseScore);
-  const decreaseScore = useScoreStore((state) => state.decreaseScore);
+  const increaseScore = useScoreStore((state) => state.increaseScore); 
   const setScore = useScoreStore((state) => state.setScore);
 
   // Current Question State Management
