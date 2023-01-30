@@ -3,14 +3,15 @@ import Link from "next/link";
 import React from "react";
 const Login: React.FC = () => {
   const discordAuthURL =
-    "https://discord.com/api/oauth2/authorize?client_id=1069266927513505862&redirect_uri=https%3A%2F%2Fvalearnis-quiz.vercel.app%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email";
+    "https://discord.com/api/oauth2/authorize?client_id=1069266927513505862&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email";
   const session = useSession();
+  
 
   if (session?.data?.user?.name) {
     return (
       <div className="flex gap-2">
         <div className="rounded-md bg-teal-600 px-4 py-2 text-base font-semibold leading-6 text-white duration-300 hover:bg-black hover:bg-discord/80">
-          {`Logged in as ${session.data.user.name}`}
+          {`Logged in as ${session.data.user?.name}`}
         </div>
         <Link
           href="/api/auth/signout"
