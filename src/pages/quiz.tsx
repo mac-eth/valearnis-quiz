@@ -1,15 +1,11 @@
 import { usePageStore, useQuestionStore, useScoreStore } from "@/store";
 import { api } from "@/utils/api";
 import React, { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
-// import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import type { question } from "@/types";
 
 const Quiz: React.FC = () => {
-  // const session = useSession();
-  // const router = useRouter();
 
   // Page State Management
   const page = usePageStore((state) => state.page);
@@ -37,16 +33,6 @@ const Quiz: React.FC = () => {
   // Fetch Questions from API
   const questionList = api.quiz.getQuiz.useQuery().data;
 
-  // Start Quiz Function
-  function handleQuizStart() {
-    if (questionList) {
-      setQuestions(questionList);
-      console.log(questions);
-    } else {
-      return console.log("No questions found!");
-    }
-  }
-
   // Handle Answer Selection
   const handleAnswerSelection = (answer: string) => {
     setSelectedAnswer(answer);
@@ -68,7 +54,8 @@ const Quiz: React.FC = () => {
   // Shuffle Options
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
 
-  useEffect(() => {
+  // Start Quiz Function
+  const handleQuizStart = useEffect(() => {
     const correctOption = questions[page]?.correctAnswer;
     const incorrectOptions = questions[page]?.incorrectAnswers;
 
@@ -78,6 +65,15 @@ const Quiz: React.FC = () => {
       setShuffledOptions(shuffledOptions);
     }
   }, [page, questions]);
+
+  useEffect(() => {
+    if (questionList) {
+      setQuestions(questionList);
+      console.log(questions);
+    } else {
+      return console.log("No questions found!");
+    }
+  }, [questionList, questions])
 
   // Get Options
   function GetOptions() {
@@ -95,7 +91,9 @@ const Quiz: React.FC = () => {
         <div className="relative flex items-center justify-center">
           <button
             className=" h-36 w-96 rounded-xl bg-blue-500 text-2xl font-bold duration-300 hover:bg-blue-700 "
-            onClick={handleQuizStart}
+            onClick={() => {
+              handleQuizStart;
+            }}
           >
             Start Quiz
           </button>
@@ -162,7 +160,9 @@ const Quiz: React.FC = () => {
             {page > 0 && (
               <button
                 className="w-40 h-24 rounded-lg bg-blue-500 hover:bg-blue-700 px-5 py-2 duration-300 hover:scale-105 "
-                onClick={decreasePage}
+                onClick={() => {
+                  decreasePage
+                }}
               >
                 Previous
               </button>
