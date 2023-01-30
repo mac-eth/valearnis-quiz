@@ -22,8 +22,6 @@ const Login: React.FC = () => {
       <div className="flex justify-center">
         <button
           className="flex h-20 w-60 items-center justify-center rounded-md bg-discord  px-4 py-2 text-base font-semibold leading-6 text-black duration-300 hover:bg-discord/80"
-
-          
           onClick={() => signIn('discord')}
         >
           Login with Discord
