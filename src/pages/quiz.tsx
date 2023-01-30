@@ -1,10 +1,20 @@
 import { usePageStore, useQuestionStore, useScoreStore } from "@/store";
 import { api } from "@/utils/api";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 import type { question } from "@/types";
 
 const Quiz: React.FC = () => {
+  const session = useSession();
+  const router = useRouter();
+
+  if (!session.data?.user) {
+    void router.push("/");
+  }
+
   // Page State Management
   const page = usePageStore((state) => state.page);
   const increasePage = usePageStore((state) => state.increasePage);
@@ -80,13 +90,20 @@ const Quiz: React.FC = () => {
 
   if (!questions?.[page] && page === 0) {
     return (
-      <div className="relative flex h-screen items-center justify-center">
-        <button
-          className=" h-20 w-60 rounded-xl bg-blue-500 duration-300 hover:bg-blue-700 "
-          onClick={handleQuizStart}
-        >
-          Start Quiz
-        </button>
+      <div className="h-screen bg-neutral-200">
+        <Link href="/">
+          <button className="duration:300 mx-12 my-12 h-20 w-48 rounded-xl bg-teal-600 hover:bg-teal-700 font-semibold">
+            Back to Home
+          </button>
+        </Link>
+        <div className="relative flex items-center justify-center">
+          <button
+            className=" h-36 w-96 rounded-xl bg-blue-500 text-2xl font-bold duration-300 hover:bg-blue-700 "
+            onClick={handleQuizStart}
+          >
+            Start Quiz
+          </button>
+        </div>
       </div>
     );
   }
@@ -132,10 +149,10 @@ const Quiz: React.FC = () => {
           {GetOptions().map((option) => (
             <button
               key={option}
-              className={`rounded-lg border border-gray-300 p-4 ${
+              className={`rounded-lg border border-gray-300 shadow duration-300 p-4 ${
                 selectedAnswer === option
-                  ? "bg-blue-500 text-white"
-                  : "bg-white"
+                  ? "bg-blue-500 hover:bg-blue-700 text-white"
+                  : "bg-white hover:bg-neutral-200"
               }`}
               onClick={() => handleAnswerSelection(option)}
             >
@@ -148,7 +165,7 @@ const Quiz: React.FC = () => {
           <div className="flex justify-center gap-6 text-xl font-semibold ">
             {page > 0 && (
               <button
-                className="w-30 h-18 rounded-lg bg-blue-500 px-5 py-2 "
+                className="w-40 h-24 rounded-lg bg-blue-500 hover:bg-blue-700 px-5 py-2 duration-300 hover:scale-105 "
                 onClick={decreasePage}
               >
                 Previous
@@ -156,7 +173,7 @@ const Quiz: React.FC = () => {
             )}
             {page < 10 && selectedAnswer ? (
               <button
-                className="w-30 h-18 rounded-lg bg-blue-500 px-5 py-2 "
+                className="w-40 h-24 rounded-lg bg-blue-500 hover:bg-blue-700 px-5 py-2 duration-300 hover:scale-105 "
                 onClick={() => {
                   setSelectedAnswer(null);
                   increasePage();
@@ -166,7 +183,7 @@ const Quiz: React.FC = () => {
               </button>
             ) : (
               <button
-                className="w-30 h-18 rounded-lg bg-red-500 px-5 py-2 "
+                className="w-40 h-24 rounded-lg bg-red-500 px-5 py-2 "
                 disabled={true}
               >
                 Next

@@ -107,7 +107,7 @@ const Home: React.FC = () => {
                 <p>Source-Code</p>
               </Link>
               <Link
-                href="#"
+                href="/quiz"
                 className="w-30 flex h-12 items-center justify-center gap-x-1 rounded-md bg-neutral-900 px-3 py-1.5 text-base font-semibold leading-7 text-white shadow-sm duration-300 hover:bg-neutral-800"
               >
                 Take Quiz<span aria-hidden="true">→</span>
