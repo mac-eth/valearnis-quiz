@@ -60,11 +60,12 @@ const Quiz: React.FC = () => {
     const incorrectOptions = questions[page]?.incorrectAnswers;
 
     if (incorrectOptions && correctOption) {
+      questionList ? setQuestions(questionList) : null;
       const options = [...incorrectOptions, correctOption];
       const shuffledOptions = options.sort(() => Math.random() - 0.5);
       setShuffledOptions(shuffledOptions);
     }
-  }, [page, questions]);
+  }, [page, questionList, questions]);
 
 
   if (!questions?.[page] && page === 0) {
@@ -79,7 +80,6 @@ const Quiz: React.FC = () => {
           <button
             className=" h-36 w-96 rounded-xl bg-blue-500 text-2xl font-bold duration-300 hover:bg-blue-700 "
             onClick={() => {
-              questionList ? setQuestions(questionList) : null;
               handleQuizStart;
             }}
           >
