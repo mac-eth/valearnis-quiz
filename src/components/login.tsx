@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 const Login: React.FC = () => {
   const session = useSession();
-  
 
   if (session?.data?.user?.name) {
     return (
@@ -21,13 +20,14 @@ const Login: React.FC = () => {
     );
   } else {
     return (
-        <div className="flex justify-center">
-      <button
-        onClick={() => signIn("discord")}
-        className="flex rounded-md bg-discord w-60 h-20 justify-center items-center  px-4 py-2 text-base font-semibold leading-6 text-black duration-300 hover:bg-discord/80"
-      >
-        Login with Discord
-      </button>
+      <div className="flex justify-center">
+        <button
+          className="flex h-20 w-60 items-center justify-center rounded-md bg-discord  px-4 py-2 text-base font-semibold leading-6 text-black duration-300 hover:bg-discord/80"
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClick={() => signIn('discord')}
+        >
+          Login with Discord
+        </button>
       </div>
     );
   }
