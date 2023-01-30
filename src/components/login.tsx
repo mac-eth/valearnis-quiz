@@ -22,7 +22,7 @@ const Login: React.FC = () => {
     );
   } else {
     return (
-        <div className="flex justify-center h-screen items-center">
+        <div className="flex justify-center">
       <Link
         href={discordAuthURL}
         className="flex rounded-md bg-discord w-60 h-20 justify-center items-center  px-4 py-2 text-base font-semibold leading-6 text-black duration-300 hover:bg-black hover:bg-discord/80"

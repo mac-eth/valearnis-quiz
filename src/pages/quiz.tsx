@@ -53,12 +53,6 @@ const Quiz: React.FC = () => {
     if (answer === questions[page]?.correctAnswer) {
       setAnswerCorrect(true);
       increaseScore();
-    } else if (
-      answer !== questions[page]?.correctAnswer &&
-      answerCorrect === true
-    ) {
-      setAnswerCorrect(false);
-      decreaseScore();
     } else {
       setAnswerCorrect(false);
     }
@@ -177,6 +171,7 @@ const Quiz: React.FC = () => {
                 className="h-24 w-40 rounded-lg bg-blue-500 px-5 py-2 duration-300 hover:scale-105 hover:bg-blue-700 "
                 onClick={() => {
                   setSelectedAnswer(null);
+
                   increasePage();
                 }}
               >

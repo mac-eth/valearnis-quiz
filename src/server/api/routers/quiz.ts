@@ -13,7 +13,6 @@ export const quizRouter = createTRPCRouter({
       }
     );
     const data = await response.json() as question[];
-    console.log(data)
     return data;
   }),
 });
