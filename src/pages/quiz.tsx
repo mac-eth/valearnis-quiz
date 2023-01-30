@@ -66,19 +66,6 @@ const Quiz: React.FC = () => {
     }
   }, [page, questions]);
 
-  useEffect(() => {
-    if (questionList) {
-      setQuestions(questionList);
-      console.log(questions);
-    } else {
-      return console.log("No questions found!");
-    }
-  }, [questionList, questions])
-
-  // Get Options
-  function GetOptions() {
-    return shuffledOptions;
-  }
 
   if (!questions?.[page] && page === 0) {
     return (
@@ -92,6 +79,7 @@ const Quiz: React.FC = () => {
           <button
             className=" h-36 w-96 rounded-xl bg-blue-500 text-2xl font-bold duration-300 hover:bg-blue-700 "
             onClick={() => {
+              questionList ? setQuestions(questionList) : null;
               handleQuizStart;
             }}
           >
@@ -117,6 +105,7 @@ const Quiz: React.FC = () => {
           <button
             className="w-30 h-18 rounded-lg bg-teal-500 px-5 py-2 "
             onClick={() => {
+              questionList ? setQuestions(questionList) : null;
               setSelectedAnswer(null);
               setScore(0);
               setQuestions([]);
@@ -140,7 +129,7 @@ const Quiz: React.FC = () => {
           )}
         </div>
         <div className="mx-10 my-10 flex flex-col gap-6 text-2xl font-bold ">
-          {GetOptions().map((option) => (
+          {shuffledOptions.map((option) => (
             <button
               key={option}
               className={`rounded-lg border border-gray-300 shadow duration-300 p-4 ${
@@ -187,7 +176,9 @@ const Quiz: React.FC = () => {
             )}
           </div>
         ) : (
-          <div></div>
+          <div>
+
+          </div>
         )}
       </div>
     );
