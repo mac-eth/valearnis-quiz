@@ -7,6 +7,7 @@ export const quizRouter = createTRPCRouter({
     const response = await fetch(
       "https://the-trivia-api.com/api/questions?limit=10",
       {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
