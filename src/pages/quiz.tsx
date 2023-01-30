@@ -33,6 +33,16 @@ const Quiz: React.FC = () => {
   // Fetch Questions from API
   const questionList = api.quiz.getQuiz.useQuery().data;
 
+  // Start Quiz Function
+  function handleQuizStart() {
+    if (questionList) {
+      setQuestions(questionList);
+      console.log(questions);
+    } else {
+      return console.log("No questions found!");
+    }
+  }
+
   // Handle Answer Selection
   const handleAnswerSelection = (answer: string) => {
     setSelectedAnswer(answer);
@@ -54,19 +64,21 @@ const Quiz: React.FC = () => {
   // Shuffle Options
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
 
-  // Start Quiz Function
-  const handleQuizStart = useEffect(() => {
+  useEffect(() => {
     const correctOption = questions[page]?.correctAnswer;
     const incorrectOptions = questions[page]?.incorrectAnswers;
 
     if (incorrectOptions && correctOption) {
-      questionList ? setQuestions(questionList) : null;
       const options = [...incorrectOptions, correctOption];
       const shuffledOptions = options.sort(() => Math.random() - 0.5);
       setShuffledOptions(shuffledOptions);
     }
-  }, [page, questionList, questions]);
+  }, [page, questions]);
 
+  // Get Options
+  function GetOptions() {
+    return shuffledOptions;
+  }
 
   if (!questions?.[page] && page === 0) {
     return (
@@ -79,9 +91,7 @@ const Quiz: React.FC = () => {
         <div className="relative flex items-center justify-center">
           <button
             className=" h-36 w-96 rounded-xl bg-blue-500 text-2xl font-bold duration-300 hover:bg-blue-700 "
-            onClick={() => {
-              handleQuizStart;
-            }}
+            onClick={handleQuizStart}
           >
             Start Quiz
           </button>
@@ -105,7 +115,6 @@ const Quiz: React.FC = () => {
           <button
             className="w-30 h-18 rounded-lg bg-teal-500 px-5 py-2 "
             onClick={() => {
-              questionList ? setQuestions(questionList) : null;
               setSelectedAnswer(null);
               setScore(0);
               setQuestions([]);
@@ -129,7 +138,7 @@ const Quiz: React.FC = () => {
           )}
         </div>
         <div className="mx-10 my-10 flex flex-col gap-6 text-2xl font-bold ">
-          {shuffledOptions.map((option) => (
+          {GetOptions().map((option) => (
             <button
               key={option}
               className={`rounded-lg border border-gray-300 shadow duration-300 p-4 ${
@@ -149,9 +158,7 @@ const Quiz: React.FC = () => {
             {page > 0 && (
               <button
                 className="w-40 h-24 rounded-lg bg-blue-500 hover:bg-blue-700 px-5 py-2 duration-300 hover:scale-105 "
-                onClick={() => {
-                  decreasePage
-                }}
+                onClick={decreasePage}
               >
                 Previous
               </button>
@@ -176,9 +183,7 @@ const Quiz: React.FC = () => {
             )}
           </div>
         ) : (
-          <div>
-
-          </div>
+          <div></div>
         )}
       </div>
     );
