@@ -1,28 +1,34 @@
-# Create T3 App
+# Mac's Quiz App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Setting Discord Bot
+You will need a Discord account, so register one if you haven’t already.
 
-## What's next? How do I make an app with this?
+Navigate to https://discord.com/developers/applications↗ and click “New Application” in the top right corner. Give your application a name and agree to the Terms of Service.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Once your application has been created, navigate to “Settings → OAuth2 → General”.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Copy the “Client ID” and add it to your .env as DISCORD_CLIENT_ID.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Click “Reset Secret”, copy the new secret, and add it to your .env as DISCORD_CLIENT_SECRET.
 
-## Learn More
+Click “Add Redirect” and type in http://localhost:3000/api/auth/callback/discord.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+Set the NEXTAUTH_SECRET in .env. Any string will work.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Setting .ENV
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+``` 
+DATABASE_URL="file:./db.sqlite"
+NEXTAUTH_SECRET=""
+NEXTAUTH_URL="http://localhost:3000"
 
-## How do I deploy this?
+# Next Auth Discord Provider
+DISCORD_CLIENT_ID=""
+DISCORD_CLIENT_SECRET=""
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Now to deploy just do:
+
+```
+yarn run dev
+```
